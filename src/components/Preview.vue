@@ -132,7 +132,7 @@ function timeSince(date) {
     line-height 20px
 
   img
-    max-width 100%
+    max-width 200px
     height auto
 
   a
