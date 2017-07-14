@@ -1,8 +1,8 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark' , fontSize1: $route.query.fontSize === '1' , fontSize2: $route.query.fontSize === '2' , fontSize3: $route.query.fontSize === '3' }")
-  h1.title {{article.edited_title}}
-    img.status-icon(:src='combineQiniu("hot.png")')
-    img.status-icon(:src='combineQiniu("recommend.png")')
+  h1.title {{article.edited_title}} &nbsp
+    img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
+    img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
   p.info
     span {{article.ago}}前 | {{article.source}}
     span.r.no-touch-bg(@click="isOrigin = !isOrigin")
@@ -13,9 +13,9 @@
       img.icon(:src='combineQiniu("share.png")')
       | 分享
     span.line
-    span.r.no-touch-bg(@click='handleLike')
+    span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.is_like}")
       img.icon(:src='likeIcon')
-      | 收藏
+      | {{likeText}}
 
   p.content(v-html='content')
 
@@ -27,9 +27,10 @@ import config from '../config.js'
 export default {
   data () {
     return {
-      article: {},
-      isOrigin: this.$route.query.isOrigin ? true : false,
-      isLike: this.$route.query.isLike ? true : false,
+      article: {
+        is_like: false
+      },
+      isOrigin: this.$route.query.isOrigin === true ? true : false,
     }
   },
   computed: {
@@ -37,8 +38,11 @@ export default {
       return this.isOrigin ? this.article.origin_content : this.article.edited_content
     },
     likeIcon () {
-      return this.isLike ? this.combineQiniu('liked.png') : this.combineQiniu('like.png')
+      return this.article.is_like ? this.combineQiniu('liked.png') : this.combineQiniu('like.png')
     },
+    likeText () {
+      return this.article.is_like ? '取消收藏' : '收藏'
+    }
 
   },
   methods: {
@@ -51,7 +55,7 @@ export default {
       } catch (e) {}
     },
     handleLike () {
-      this.isLike = !this.isLike
+      this.article.is_like = !this.article.is_like
       try {
         JSObject.like(this.article._id)
       } catch (e) {}
@@ -67,7 +71,9 @@ export default {
     .then(result => {
       this.article = result.data.data
       try { JSObject.cancelLoading() } catch (e) {}
+
     }, error => {})
+
   },
   watch: {
     'article' (value) {
@@ -115,7 +121,6 @@ function timeSince(date) {
   height 100%
   -webkit-overflow-scrolling touch
 
-
   .title
     font-family 'PingFangSC-Medium'
     font-size 21px
@@ -130,13 +135,15 @@ function timeSince(date) {
     font-family 'PingFangSC-Regular'
     font-size 13px
     line-height 20px
+    width 100%
 
-  img
-    max-width 200px
-    height auto
+    img, figure, iframe
+      width 80% !important
+      height auto
 
-  a
+  a, .like
     color rgba(255,137,50,1)
+  a
     margin 0 2px
   .r
     float right
