@@ -1,13 +1,15 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark' , fontSize1: $route.query.fontSize === '1' , fontSize2: $route.query.fontSize === '2' , fontSize3: $route.query.fontSize === '3' }")
+  img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
+  img.translate_warning(:src='combineQiniu("translate_warning.svg")', v-if='isOrigin', @click="isOrigin = false")
   h1.title {{article.edited_title}} &nbsp
     img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
   p.info
     span {{article.ago}}前 | {{article.source}}
     span.r.no-touch-bg(@click="isOrigin = !isOrigin")
-      img.icon(:src='combineQiniu("origin.png")')
-      | 原文
+      img.icon(:src='originIcon')
+      | {{isOrigin ? "翻译" : "原文"}}
     span.line
     span.r.no-touch-bg(@click='handleShare')
       img.icon(:src='combineQiniu("share.png")')
@@ -15,10 +17,9 @@
     span.line
     span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.is_like}")
       img.icon(:src='likeIcon')
-      | {{likeText}}
+      | {{article.is_like ? "取消收藏" : "收藏" }}
 
   p.content(v-html='content')
-
 </template>
 
 <script>
@@ -30,7 +31,7 @@ export default {
       article: {
         is_like: false
       },
-      isOrigin: this.$route.query.isOrigin === true ? true : false,
+      isOrigin: this.$route.query.isOrigin
     }
   },
   computed: {
@@ -38,10 +39,10 @@ export default {
       return this.isOrigin ? this.article.origin_content : this.article.edited_content
     },
     likeIcon () {
-      return this.article.is_like ? this.combineQiniu('liked.png') : this.combineQiniu('like.png')
+      return this.article.is_like ? this.combineQiniu('liked.svg') : this.combineQiniu('like.png')
     },
-    likeText () {
-      return this.article.is_like ? '取消收藏' : '收藏'
+    originIcon () {
+      return this.isOrigin ? this.combineQiniu('translate.svg') : this.combineQiniu('origin.svg')
     }
 
   },
@@ -57,7 +58,7 @@ export default {
     handleLike () {
       this.article.is_like = !this.article.is_like
       try {
-        JSObject.like(this.article._id)
+        JSObject.like(this.article._id, this.article.is_like)
       } catch (e) {}
     },
     handleLink () {
@@ -121,6 +122,20 @@ function timeSince(date) {
   height 100%
   -webkit-overflow-scrolling touch
 
+  .tpl
+    width 100%
+    height 100%
+    position absolute
+    top 0
+    left 0
+    z-index 2
+    background-color white
+
+  .translate_warning
+    width 120%
+    margin-left -10%
+    margin-top -12px
+
   .title
     font-family 'PingFangSC-Medium'
     font-size 21px
@@ -155,6 +170,7 @@ function timeSince(date) {
     margin-right 4px
     top 1px
     position relative
+
   .line
     width 1px
     height 10px
