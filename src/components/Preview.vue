@@ -61,19 +61,27 @@ export default {
       try {
         JSObject.like(this.article._id, this.article.is_like)
       } catch (e) {}
-    },
-    handleLink () {
-      try {
-        JSObject.link(this.article.url)
-      } catch (e) {}
     }
   },
   mounted() {
+
+    const linkFunc = (event) => {
+      if (event.target.href) {
+        try {
+          JSObject.link(event.target.href)
+        } catch (e) {}
+      }
+    }
+
     axios.get(`${config.host}/api/v1/articles/${this.$route.params.id}`, {params: {user: this.$route.query.user}})
     .then(result => {
       this.article = result.data.data
       try { JSObject.cancelLoading() } catch (e) {}
-
+      setTimeout(() => {
+        Array.from(document.querySelectorAll('a')).forEach(el => {
+          el.onclick = linkFunc
+        })
+      })
     }, error => {})
 
   },
