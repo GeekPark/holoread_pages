@@ -7,10 +7,10 @@
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
   p.info
     span {{article.ago}}前 | {{article.source}}
-    span.r.no-touch-bg(@click="isOrigin = !isOrigin")
+    span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
       img.icon(:src='originIcon')
       | {{isOrigin ? "翻译" : "原文"}}
-    span.line
+    span.line(v-if='!article.is_cn')
     span.r.no-touch-bg(@click='handleShare')
       img.icon(:src='combineQiniu("share.png")')
       | 分享
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       article: {
-        is_like: false
+        is_like: false,
+        is_cn: false
       },
       isOrigin: this.$route.query.isOrigin
     }
