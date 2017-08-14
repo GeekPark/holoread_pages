@@ -173,6 +173,9 @@ function timeSince(date) {
   .sougou
     width 50%
     margin-left 25%
+    margin-top 50px
+    margin-bottom 45px
+
 
   a, .like
     color rgba(255,137,50,1)
