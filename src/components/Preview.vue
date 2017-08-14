@@ -19,7 +19,9 @@
       img.icon(:src='likeIcon')
       | {{article.is_like ? "取消收藏" : "收藏" }}
 
-  p.content(v-html='content')
+  p
+    .content(v-html='content')
+    img.sougou(:src='sougouIcon')
 </template>
 
 <script>
@@ -44,6 +46,10 @@ export default {
     },
     originIcon () {
       return this.isOrigin ? this.combineQiniu('translate.svg') : this.combineQiniu('origin.svg')
+    },
+    sougouIcon () {
+      const {theme = 'light'} = this.$route.query
+      return this.combineQiniu(`${theme}-sougou.png`)
     }
 
   },
@@ -75,7 +81,7 @@ export default {
 
     axios.get(`${config.host}/api/v1/articles/${this.$route.params.id}`, {params: {user: this.$route.query.user}})
     .then(result => {
-      this.article = result.data.data
+      this.article = result.data
       try { JSObject.cancelLoading() } catch (e) {}
       setTimeout(() => {
         Array.from(document.querySelectorAll('a')).forEach(el => {
@@ -164,6 +170,9 @@ function timeSince(date) {
     img, figure, iframe
       width 80% !important
       height auto
+  .sougou
+    width 50%
+    margin-left 25%
 
   a, .like
     color rgba(255,137,50,1)
