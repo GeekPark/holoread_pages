@@ -149,7 +149,7 @@ function timeSince(date) {
     background-color white
 
   .translate_warning
-    width 120%
+    width calc(100% + 24px)
     height 26px
     line-height 26px
     margin-left -12px
@@ -235,7 +235,7 @@ function timeSince(date) {
   .line
     background-color #666666
   .translate_warning
-    background-color rgba(33,80,62,1)
+    background-color rgba(33,80,62,1) !important
 
 .fontSize1
   .title
