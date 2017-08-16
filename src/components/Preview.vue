@@ -234,6 +234,8 @@ function timeSince(date) {
     color #666666
   .line
     background-color #666666
+  .translate_warning
+    background-color rgba(33,80,62,1)
 
 .fontSize1
   .title
