@@ -1,7 +1,9 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark' , fontSize1: $route.query.fontSize === '1' , fontSize2: $route.query.fontSize === '2' , fontSize3: $route.query.fontSize === '3' }")
   img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
-  img.translate_warning(:src='combineQiniu("translate_warning.svg")', v-if='isOrigin', @click="isOrigin = false")
+  .translate_warning
+    span.try 点击试试机器翻译！
+    span.msg 水平有限，小心食用~
   h1.title {{article.edited_title}} &nbsp
     img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
@@ -148,8 +150,20 @@ function timeSince(date) {
 
   .translate_warning
     width 120%
-    margin-left -10%
+    height 26px
+    line-height 26px
+    margin-left -12px
     margin-top -12px
+    text-align center
+    background-color rgba(161,221,191,1)
+    font-family 'PingFangSC-Regular'
+    font-size 13px
+    color #fff
+
+    .try
+      margin-left -12px
+      color rgba(44,181,115,1)
+
 
   .title
     font-family 'PingFangSC-Medium'
@@ -177,10 +191,11 @@ function timeSince(date) {
     margin-bottom 45px
 
 
-  a, .like
+  .like
     color rgba(255,137,50,1)
   a
     margin 0 2px
+    color rgba(44,181,115,1)
   .r
     float right
     font-size 13px
