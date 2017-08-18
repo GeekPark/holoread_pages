@@ -1,7 +1,7 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark' , fontSize1: $route.query.fontSize === '1' , fontSize2: $route.query.fontSize === '2' , fontSize3: $route.query.fontSize === '3' }")
   img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
-  .translate_warning
+  .translate_warning(v-if='isOrigin', @click='isOrigin = false')
     span.try 点击试试机器翻译！
     span.msg 水平有限，小心食用~
   h1.title {{article.edited_title}} &nbsp
