@@ -36,7 +36,7 @@ export default {
         is_like: false,
         is_cn: false
       },
-      isOrigin: this.$route.query.isOrigin === true ? true : false
+      isOrigin: this.$route.query.isOrigin === 'true' ? true : false
     }
   },
   computed: {
