@@ -17,9 +17,9 @@
       img.icon(:src='combineQiniu("share.png")')
       | 分享
     span.line
-    span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.is_like}")
+    span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.like}")
       img.icon(:src='likeIcon')
-      | {{article.is_like ? "取消收藏" : "收藏" }}
+      | {{article.like ? "取消收藏" : "收藏" }}
 
   p
     .content(v-html='content')
@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       article: {
-        is_like: false,
+        like: false,
         is_cn: false
       },
       isOrigin: this.$route.query.isOrigin === 'true' ? true : false
@@ -44,7 +44,7 @@ export default {
       return this.isOrigin ? this.article.origin_content : this.article.edited_content
     },
     likeIcon () {
-      return this.article.is_like ? this.combineQiniu('liked.svg') : this.combineQiniu('like.png')
+      return this.article.like ? this.combineQiniu('liked.svg') : this.combineQiniu('like.png')
     },
     originIcon () {
       return this.isOrigin ? this.combineQiniu('translate.svg') : this.combineQiniu('origin.svg')
@@ -65,9 +65,9 @@ export default {
       } catch (e) {}
     },
     handleLike () {
-      this.article.is_like = !this.article.is_like
+      this.article.like = !this.article.like
       try {
-        JSObject.like(this.article._id, this.article.is_like)
+        JSObject.like(this.article._id, this.article.like)
       } catch (e) {}
     }
   },
@@ -85,6 +85,7 @@ export default {
     .then(result => {
       this.article = result.data
       try { JSObject.cancelLoading() } catch (e) {}
+      try { JSObject.fetch(article.edited_title) } catch (e) {}
       setTimeout(() => {
         Array.from(document.querySelectorAll('a')).forEach(el => {
           el.onclick = linkFunc
