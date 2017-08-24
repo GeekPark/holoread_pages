@@ -85,7 +85,7 @@ export default {
     .then(result => {
       this.article = result.data
       try { JSObject.cancelLoading() } catch (e) {}
-      try { JSObject.fetch(article.edited_title) } catch (e) {}
+      try { JSObject.fetch(this.article.edited_title) } catch (e) {}
       setTimeout(() => {
         Array.from(document.querySelectorAll('a')).forEach(el => {
           el.onclick = linkFunc
