@@ -81,8 +81,9 @@ export default {
       }
     }
 
-    axios.get(`${config.host}/api/v1/articles/${this.$route.params.id}`, {params: {user: this.$route.query.user}})
+    axios.get(`${config.host}/api/v1/articles/${this.$route.params.id}`, {params: {userid: this.$route.query.user}})
     .then(result => {
+      console.log(result.data)
       this.article = result.data
       try { JSObject.cancelLoading() } catch (e) {}
       try { JSObject.fetch(this.article.edited_title) } catch (e) {}
