@@ -1,14 +1,20 @@
 <template lang="jade">
-#preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark' , fontSize1: $route.query.fontSize === '1' , fontSize2: $route.query.fontSize === '2' , fontSize3: $route.query.fontSize === '3' }")
+#preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark', fontSize1: $route.query.fontSize === '1', fontSize2: $route.query.fontSize === '2', fontSize3: $route.query.fontSize === '3' }")
+
   img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
+  .img-preview
+    img(:src='imgUrl', v-if='imgUrl', alt='img', @click='cancelTouch')
+
   .translate_warning(v-if='isOrigin', @click='isOrigin = false')
     span.try 点击试试机器翻译！
     span.msg 水平有限，小心食用~
+
   h1.title {{article.edited_title}} &nbsp
     img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
+
   p.info
-    span {{article.ago}}前 | {{article.source}}
+    span(@click='handleSource') {{article.ago}}前 | {{article.source}}
     span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
       img.icon(:src='originIcon')
       | {{isOrigin ? "翻译" : "原文"}}
@@ -24,6 +30,7 @@
   p
     .content(v-html='content')
     img.sougou(:src='sougouIcon')
+
 </template>
 
 <script>
@@ -36,6 +43,7 @@ export default {
         like: false,
         is_cn: false
       },
+      imgUrl: '',
       isOrigin: this.$route.query.isOrigin === 'true' ? true : false
     }
   },
@@ -53,7 +61,6 @@ export default {
       const {theme = 'light'} = this.$route.query
       return this.combineQiniu(`${theme}-sougou.png`)
     }
-
   },
   methods: {
     combineQiniu (path) {
@@ -69,6 +76,14 @@ export default {
       try {
         JSObject.like(this.article._id, this.article.like)
       } catch (e) {}
+    },
+    handleSource () {
+      try {
+        JSObject.link(this.article.url)
+      } catch (e) {}
+    },
+    cancelTouch () {
+      this.imgUrl = ''
     }
   },
   mounted() {
@@ -81,6 +96,11 @@ export default {
       }
     }
 
+    const touchImg = (event) => {
+      console.log(event)
+      this.imgUrl = event.target.currentSrc
+    }
+
     axios.get(`${config.host}/api/v1/articles/${this.$route.params.id}`, {params: {userid: this.$route.query.user}})
     .then(result => {
       console.log(result.data)
@@ -91,6 +111,9 @@ export default {
         Array.from(document.querySelectorAll('a')).forEach(el => {
           el.onclick = linkFunc
         })
+        Array.from(document.querySelectorAll('.content img')).forEach(el => {
+          el.onclick = touchImg
+        })
       })
     }, error => {})
 
@@ -98,6 +121,9 @@ export default {
   watch: {
     'article' (value) {
       value.ago = timeSince(new Date(value.published))
+    },
+    'isOrigin' (value) {
+      try { JSObject.languageChange() } catch (e) {}
     }
   }
 }
@@ -149,6 +175,14 @@ function timeSince(date) {
     left 0
     z-index 2
     background-color white
+
+  .img-preview
+    height 100%
+    position fixed
+    z-index 3
+    img
+      width 100%
+      height 100%
 
   .translate_warning
     width calc(100% + 24px)
