@@ -97,7 +97,6 @@ export default {
     }
 
     const touchImg = (event) => {
-      console.log(event)
       this.imgUrl = event.target.currentSrc
     }
 
@@ -114,6 +113,7 @@ export default {
         Array.from(document.querySelectorAll('.content img')).forEach(el => {
           el.onclick = touchImg
         })
+        hiddenElements(this)
       })
     }, error => {})
 
@@ -125,6 +125,16 @@ export default {
     'isOrigin' (value) {
       try { JSObject.languageChange() } catch (e) {}
     }
+  }
+}
+
+function hiddenElements(_this) {
+  if (_this.article.source === 'businessinsider') {
+    const el = document.querySelectorAll('#preview .content .content div')
+    el[0].style.display = 'none'
+    el[el.length - 1].style.display = 'none'
+    el[el.length - 4].style.display = 'none'
+    console.log(el)
   }
 }
 
