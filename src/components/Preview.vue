@@ -72,6 +72,9 @@ export default {
       } catch (e) {}
     },
     handleLike () {
+      if (this.$route.query.user === undefined) {
+        return
+      }
       this.article.like = !this.article.like
       try {
         JSObject.like(this.article._id, this.article.like)
@@ -274,12 +277,14 @@ function timeSince(date) {
 
 .darkTheme
   background-color #1e1e29
-  .title, .content
-    color #999999
+  .title
+    color #8C96B4
+  .content
+    color #6E82A0
   .info *
-    color #666666
+    color #606476
   .line
-    background-color #666666
+    background-color rgba(96, 100, 188, 1) !important
   .translate_warning
     background-color rgba(33,80,62,1) !important
 
