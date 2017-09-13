@@ -19,10 +19,10 @@
       img.icon(:src='originIcon')
       | {{isOrigin ? "翻译" : "原文"}}
     span.line(v-if='!article.is_cn')
-    span.r.no-touch-bg(@click='handleShare')
+    span.r.no-touch-bg(@click='handleShare', v-if='!isWechat')
       img.icon(:src='combineQiniu("share.png")')
       | 分享
-    span.line
+    span.line(v-if='!isWechat')
     span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.like}")
       img.icon(:src='likeIcon')
       | {{article.like ? "取消收藏" : "收藏" }}
@@ -43,6 +43,7 @@ export default {
         like: false,
         is_cn: false
       },
+      isWechat: false,
       imgUrl: '',
       isOrigin: this.$route.query.isOrigin === 'true' ? true : false
     }
@@ -119,7 +120,7 @@ export default {
         hiddenElements(this)
       })
     }, error => {})
-
+    this.isWechat = isWeixinBrowser()
   },
   watch: {
     'article' (value) {
@@ -129,6 +130,10 @@ export default {
       try { JSObject.languageChange() } catch (e) {}
     }
   }
+}
+
+function isWeixinBrowser(){
+  return /micromessenger/.test(navigator.userAgent.toLowerCase())
 }
 
 function hiddenElements(_this) {
