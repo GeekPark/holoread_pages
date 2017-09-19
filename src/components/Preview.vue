@@ -298,18 +298,21 @@ function timeSince(date) {
     font-size 20px !important
   .content *, .info *
     font-size 13px !important
+    line-height 26px
 
 .fontSize2
   .title
     font-size 21px !important
   .content *, .info *
     font-size 14px !important
+    line-height 28px
 
 .fontSize3
   .title
     font-size 22px !important
   .content *, .info *
     font-size 15px !important
+    line-height 30px
 
 
 </style>
