@@ -295,24 +295,24 @@ function timeSince(date) {
 
 .fontSize1
   .title
-    font-size 20px !important
-  .content *, .info *
-    font-size 13px !important
-    line-height 26px
-
-.fontSize2
-  .title
-    font-size 21px !important
-  .content *, .info *
-    font-size 14px !important
-    line-height 28px
-
-.fontSize3
-  .title
     font-size 22px !important
   .content *, .info *
     font-size 15px !important
-    line-height 30px
+    line-height 27px
+
+.fontSize2
+  .title
+    font-size 23px !important
+  .content *, .info *
+    font-size 17px !important
+    line-height 29px
+
+.fontSize3
+  .title
+    font-size 24px !important
+  .content *, .info *
+    font-size 19px !important
+    line-height 31px
 
 
 </style>
