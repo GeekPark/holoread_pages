@@ -299,6 +299,8 @@ function timeSince(date) {
   .content *, .info *
     font-size 15px !important
     line-height 27px
+  .line
+    margin 8px !important
 
 .fontSize2
   .title
@@ -306,6 +308,9 @@ function timeSince(date) {
   .content *, .info *
     font-size 17px !important
     line-height 29px
+  .line
+    margin 8px !important
+    height 12px !important
 
 .fontSize3
   .title
@@ -313,6 +318,9 @@ function timeSince(date) {
   .content *, .info *
     font-size 19px !important
     line-height 31px
+  .line
+    margin 9px !important
+    height 14px !important
 
 
 </style>
