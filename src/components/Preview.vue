@@ -277,8 +277,8 @@ function timeSince(date) {
     word-break: normal;
     font-size: 30px;
 
-#preview::-webkit-scrollbar
-  display:none
+// #preview::-webkit-scrollbar
+//   display:none
 
 .darkTheme
   background-color #1e1e29
