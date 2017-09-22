@@ -7,6 +7,7 @@
   .buttons
     a.button(href='https://itunes.apple.com/app/id1254313928') iOS
     a.button(href='http://osxjx70im.bkt.clouddn.com/holoread-app-release.apk?attname=') Andriod
+    a.button.test(href='/test') Test
 </template>
 
 <script>
@@ -25,25 +26,27 @@ export default {
     margin 20px
 .buttons
   text-align center
-.button {
-  position: relative;
-  display: inline-block;
-  padding: 0 10px;
-  margin: 10px;
-  height: 43px;
-  width: 115px;
-  line-height: 43px;
-  color: #000;
-  background: rgba(255,255,255,0.08);
-  border: 2px solid #3F3F3F;
-  box-sizing: border-box;
-  border-radius: 4px;
-  font-size: 14px;
-  text-decoration: none;
-  cursor: default;
-  text-align:center;
-  cursor: pointer;
-}
+.button
+  position relative
+  display inline-block
+  padding 0 10px
+  margin 10px
+  height 43px
+  width 115px
+  line-height 43px
+  color #000
+  background rgba(255,255,255,0.08)
+  border 2px solid #3F3F3F
+  box-sizing border-box
+  border-radius 4px
+  font-size 14px
+  text-decoration none
+  cursor default
+  text-align center
+  cursor pointer
+.test
+  color #D03840
+  border-color #D03840
 @media (max-width: 745px) {
   .imgs img {
     width 100%

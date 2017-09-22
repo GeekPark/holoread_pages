@@ -35,7 +35,7 @@
 
 <script>
 import config from '../config.js'
-
+import tool from './tool'
 export default {
   data () {
     return {
@@ -124,7 +124,7 @@ export default {
   },
   watch: {
     'article' (value) {
-      value.ago = timeSince(new Date(value.published))
+      value.ago = tool.timeSince(new Date(value.published))
     },
     'isOrigin' (value) {
       try { JSObject.languageChange() } catch (e) {}
@@ -146,33 +146,7 @@ function hiddenElements(_this) {
   }
 }
 
-function timeSince(date) {
 
-  var seconds = Math.floor((new Date() - date) / 1000);
-
-  var interval = Math.floor(seconds / 31536000);
-
-  if (interval > 1) {
-    return interval + "y"; //years
-  }
-  interval = Math.floor(seconds / 2592000);
-  if (interval > 1) {
-    return interval + "M"; // months
-  }
-  interval = Math.floor(seconds / 86400);
-  if (interval > 1) {
-    return interval + "d"; // days
-  }
-  interval = Math.floor(seconds / 3600);
-  if (interval > 1) {
-    return interval + "h"; // hours
-  }
-  interval = Math.floor(seconds / 60);
-  if (interval > 1) {
-    return interval + "m"; //minutes
-  }
-  return Math.floor(seconds) + "s"; //seconds
-}
 </script>
 
 <style lang="stylus">
