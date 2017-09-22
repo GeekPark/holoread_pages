@@ -8,7 +8,7 @@ section.test
           span.source {{item.source}}
           span.published {{item.published}}
         .title {{item.origin_title}}
-    p.warning(b-else) Loading ...
+    p.warning(v-else) Loading ...
     .next(@click='next') Next
   p.copyright © 2017 GitHub, Inc.
 </template>
