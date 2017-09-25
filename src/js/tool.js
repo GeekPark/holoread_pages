@@ -25,7 +25,9 @@ function timeSince(date) {
 }
 
 function timeSinceTest(date) {
-  return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+  let m = date.getMinutes()
+  m = m < 10 ? `0${m}` : m
+  return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${m}`
 }
 
 export default {
