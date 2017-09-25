@@ -47,7 +47,7 @@ export default {
       this.$router.push(`source/${s}`)
     },
     fetch (isConcat = true) {
-      config.host = 'http://127.0.0.1:4000'
+      // config.host = 'http://127.0.0.1:4000'
       axios.get(`${config.host}/api/v1/fetures/test`, {params: this.params})
       .then(result => {
         localStorage.setItem('catch', result.data.data)
