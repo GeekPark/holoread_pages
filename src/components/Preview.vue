@@ -35,7 +35,7 @@
 
 <script>
 import config from '../config.js'
-import tool from './tool'
+import tool from '../js/tool.js'
 export default {
   data () {
     return {
