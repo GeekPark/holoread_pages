@@ -5,6 +5,7 @@ section.test
       .logo(@click='cleanData') HoloRead Test Version
       li(v-for='item in list', :key='item._id', v-if='list.length')
         a(:href='item.url', target='_blank').title {{item.origin_title}}
+        .abstract {{item.origin_content}}
         .bar
           span.source(@click='otherSource(item.source)') {{item.source}}
           span.published {{item.published}}
@@ -106,6 +107,10 @@ export default {
       margin-right 10px
       color rgba(0, 0, 0, .8) !important
       cursor pointer
+    .abstract
+      font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
+      color rgba(0, 0, 0, .4) !important
+      font-size 14px
     .published
       font-size 13px
       color rgba(0, 0, 0, .4) !important
