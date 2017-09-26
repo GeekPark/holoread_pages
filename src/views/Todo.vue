@@ -15,7 +15,7 @@ import TopNews from '@/components/TopNews.vue'
 export default {
   data () {
     return {
-      list: ['Abstract', 'Search']
+      list: ['[x] Abstract', 'Search']
     }
   },
   components: {

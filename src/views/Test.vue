@@ -5,13 +5,16 @@ section.test
     .left
     ul
       li(v-for='item in list', :key='item._id', v-if='list.length')
-        a(:href='item.url', target='_blank').title {{item.origin_title}}
-        .abstract {{item.origin_content}}
-        .bar
-          img(:src='item.avatar')
-          .info
-            .source(@click='otherSource(item.source)') {{item.source}}
-            .published {{item.published}}
+        .li-left
+          a(:href='item.url', target='_blank').title {{item.origin_title}}
+          .abstract {{item.origin_content}}
+          .bar
+            img(:src='item.avatar')
+            .info
+              .source(@click='otherSource(item.source)') {{item.source}}
+              .published {{item.published}}
+        .li-right
+          img(:src='item.cover', onerror='this.parentNode.removeChild(this)')
       p.warning(v-else) Loading ...
       .next(@click='next') Next
     .right
@@ -63,6 +66,10 @@ export default {
         result.data.data.map(el => {
           el.published = tool.timeSinceTest(new Date(el.published))
           el.avatar = `${config.qiniu}/app/icon/${el.source}.png`
+          el.origin_title = el.origin_title.replace('&#8217;', '\'')
+          if (el.origin_content.startsWith('b\'')) {
+            el.origin_content = el.origin_content.replace('b\'', '')
+          }
           return el
         })
         this.list = isConcat ? this.list.concat(result.data.data) : result.data.data
@@ -98,6 +105,14 @@ export default {
       padding 20px 0 10px 0
       border-bottom 1px solid rgb(240, 240, 240)
       width 80%
+      display flex
+    .li-left
+      flex 8
+    .li-right
+      flex 1
+      img
+        width 100%
+        height auto
     .bar
       margin-top 3px
       display flex
@@ -108,9 +123,11 @@ export default {
       margin 10px 10px 10px 0
     .abstract
       font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
-      color rgba(0, 0, 0, .4) !important
-      font-size 14px
-      margin-bottom 10px
+      color rgb(197, 197, 197)
+      font-size 16px
+      margin-top 8px
+      line-height 20px
+      letter-spacing 0.4px
     .info
       margin-top 6px
     .source
