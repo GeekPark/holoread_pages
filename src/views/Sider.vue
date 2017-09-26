@@ -59,4 +59,5 @@ export default {
       padding-bottom 2px
     .more:hover
       border-bottom 1px solid #BFBFBF
+
 </style>

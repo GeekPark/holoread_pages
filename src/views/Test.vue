@@ -1,22 +1,19 @@
 <template lang="jade">
-section.source
+section.test
   .container
-    vsider(:propsType='propsType')
     ul
-      .logo(@click='cleanData')
-        router-link(to='/test')
-          p HoloRead Test Version
-        div
-          img(:src='qiniu(params.source)', v-if='params.source')
-          span(v-if='params.source') {{params.source}}
+      .logo(@click='cleanData') HoloRead Test Version
       li(v-for='item in list', :key='item._id', v-if='list.length')
-          a(:href='item.url', target='_blank').title {{item.origin_title}}
-          .bar
-            span.published {{item.published}}
+        a(:href='item.url', target='_blank').title {{item.origin_title}}
+        .abstract {{item.origin_content}}
+        .bar
+          span.source(@click='otherSource(item.source)') {{item.source}}
+          span.published {{item.published}}
       p.warning(v-else) Loading ...
       .next(@click='next') Next
-    vright
-  p.copyright © 2017 HoloRead, Inc.
+  p.copyright
+    span © 2017 HoloRead, Inc. &nbsp
+    a(href='mailto:github@ericjj.com') Feedback
 </template>
 
 <script>
@@ -47,10 +44,11 @@ export default {
       this.params.start += 1
       this.fetch()
     },
-    qiniu (item) {
-      return `http://osxjx70im.bkt.clouddn.com/app/icon/${item}.png`
+    otherSource (s) {
+      this.$router.push(`source/${s}`)
     },
     fetch (isConcat = true) {
+      // config.host = 'http://127.0.0.1:4000'
       axios.get(`${config.host}/api/v1/fetures/test`, {params: this.params})
       .then(result => {
         localStorage.setItem('catch', result.data.data)
@@ -61,11 +59,6 @@ export default {
         this.list = isConcat ? this.list.concat(result.data.data) : result.data.data
       }, error => {})
     },
-    propsType (t) {
-      this.params.start = 0
-      this.params.source = t
-      this.fetch(false)
-    },
     cleanData () {
       delete this.params.source
       this.params = defaultParams
@@ -73,42 +66,38 @@ export default {
     }
   },
   mounted() {
-    this.params.source = this.$route.params.s
     this.fetch()
   }
 }
 </script>
 <style lang="stylus" scoped>
-.source
+.test
   background #f5f5f5
+  overflow scroll
+  -webkit-overflow-scrolling touch
+  height 100%
+
   .copyright
     padding 40px 0 40px 0
     text-align center
+  a
+    color #2c3e50
 
   .container
     background #f5f5f5
-    overflow-scrolling touch
-    min-height 100%
-    display flex
+    height calc(100% + 1px)
+
 
     .logo
       font-size 30px
-      margin-bottom 20px
+      margin-bottom 40px
       cursor pointer
-      span
-        line-height 30px
-        vertical-align top
-        margin-left 10px
-        font-size 15px
-      img
-        width 30px
-        height 30px
-        border-radius 15px
     ul
-      flex 3
+      flex 1
       list-style none
       margin 0 auto
       padding 30px 0 0 0
+      width 60%
     li
       padding 10px
       margin-bottom 10px
@@ -120,6 +109,11 @@ export default {
       font-size 15px
       margin-right 10px
       color rgba(0, 0, 0, .8) !important
+      cursor pointer
+    .abstract
+      font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
+      color rgba(0, 0, 0, .4) !important
+      font-size 14px
     .published
       font-size 13px
       color rgba(0, 0, 0, .4) !important
@@ -136,10 +130,12 @@ export default {
       box-shadow 0px 1px 1px #d2d2d2
     a
       color #000
+    .source:hover
+      border-bottom 1px solid #7F7F7F
 
 @media (max-width: 750px) {
   ul {
-    width calc(100% - 20px) !important
+    width calc(100% - 10px) !important
   }
 }
 </style>

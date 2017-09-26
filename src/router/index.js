@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Preview from '@/components/Preview'
-import Test from '@/components/Test'
-import Source from '@/components/Source'
+import Hello from '@/views/Hello'
+import Preview from '@/views/Preview'
+import Test from '@/views/Test'
+import Source from '@/views/Source'
 
 Vue.use(Router)
 
