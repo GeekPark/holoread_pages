@@ -1,11 +1,12 @@
 <template lang="jade">
 header.header
-  router-link(to='/test').logo HoloNews
+  router-link(to='/test').logo
+    span(@click='onClick') HoloNews
   .items
     router-link(to='/test').list
       span(@click='onClick') READING LIST
       span.bottom-line
-    router-link(to='/test').list
+    router-link(to='/todo').list
       span TODO
       span.bottom-line
 </template>
@@ -20,7 +21,7 @@ export default {
   props: ['refresh'],
   methods: {
     onClick () {
-      this.refresh()
+      this.refresh && this.refresh()
     }
   },
   mounted() {

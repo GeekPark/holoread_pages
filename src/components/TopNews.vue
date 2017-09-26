@@ -7,8 +7,8 @@ section.top-views
       a(:href='item.url', target='_blank')
         .title  {{item.origin_title}}
     .others
-      span © 2017 HoloRead, Inc.
-      a(href='mailto:github@ericjj.com') Email
+      //- span © 2017 GeekPark
+      a(href='mailto:github@ericjj.com') Contact
       a(href='https://t.me/joinchat/ESfcUQ0wmwbE6rpwtfCx1g', target='_blank') Telegram Group
 </template>
 
@@ -70,6 +70,9 @@ export default {
     .others
       text-align center
       margin-top 50px
+      color rgba(0,0,0,0.4)
+      a
+        color rgba(0,0,0,0.4)
       *
         margin 0 5px
 

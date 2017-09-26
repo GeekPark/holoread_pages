@@ -22,8 +22,6 @@ section.test
 <script>
 import config from '../config.js'
 import tool from '../js/tool.js'
-import Sider from '@/components/Sider.vue'
-import Right from '@/components/Right.vue'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import TopNews from '@/components/TopNews.vue'
@@ -35,8 +33,6 @@ const defaultParams = {
 export default {
   name: 'test',
   components: {
-    'vsider': Sider,
-    'vright': Right,
     'vfooter': Footer,
     'vheader': Header,
     'topnews': TopNews
@@ -108,8 +104,8 @@ export default {
     img
       width 30px
       height 30px
-      border-radius 15px
-      margin 10px
+      // border-radius 15px
+      margin 10px 10px 10px 0
     .abstract
       font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
       color rgba(0, 0, 0, .4) !important

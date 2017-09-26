@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import DownLoad from '../views/Downl'
 import Preview from '../views/Preview'
 import Test from '../views/Test'
-import Source from '../views/Source'
+import Todo from '../views/Todo'
+// import Source from '../views/Source'
 
 Vue.use(Router)
 
@@ -21,9 +22,9 @@ export default new Router({
       component: Preview
     },
     {
-      path: '/source/:s',
-      name: 'Source',
-      component: Source
+      path: '/todo',
+      name: 'Todo',
+      component: Todo
     },
     {
       path: '/test',
