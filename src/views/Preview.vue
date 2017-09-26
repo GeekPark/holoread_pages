@@ -139,7 +139,7 @@ function isWeixinBrowser(){
 function hiddenElements(_this) {
   if (_this.article.source === 'businessinsider') {
     const el = document.querySelectorAll('#preview .content .content div')
-    el[0].style.display = 'none'
+    // el[0].style.display = 'none'
     el[el.length - 1].style.display = 'none'
     el[el.length - 4].style.display = 'none'
     console.log(el)
