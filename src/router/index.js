@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DownLoad from '../views/DownLoad'
+import DownLoad from '../views/Downkoad'
 import Preview from '../views/Preview'
 import Test from '../views/Test'
 import Source from '../views/Source'
