@@ -16,14 +16,14 @@ section.source
       p.warning(v-else) Loading ...
       .next(@click='next') Next
     vright
-  p.copyright © 2017 HoloRead, Inc.
+  //- p.copyright © 2017 HoloRead, Inc.
 </template>
 
 <script>
 import config from '../config.js'
 import tool from '../js/tool.js'
-import Sider from './Sider.vue'
-import Right from './Right.vue'
+import Sider from '@/components/Sider.vue'
+import Right from '@/components/Right.vue'
 
 const defaultParams = {
   start: 0,
@@ -48,7 +48,7 @@ export default {
       this.fetch()
     },
     qiniu (item) {
-      return `http://osxjx70im.bkt.clouddn.com/app/icon/${item}.png`
+      return `${config.qiniu}/app/icon/${item}.png`
     },
     fetch (isConcat = true) {
       axios.get(`${config.host}/api/v1/fetures/test`, {params: this.params})

@@ -1,5 +1,5 @@
 <template lang="jade">
-section.right
+section.ad
   //- ul
   //-   li(v-for='item in display')
   //-     a(:href='item[1]', target='_blank')
@@ -12,7 +12,7 @@ import config from '../config.js'
 import tool from '../js/tool.js'
 import ad from '../js/ad.js'
 export default {
-  name: 'right',
+  name: 'ad',
   data () {
     return {
       display: ad
@@ -24,7 +24,7 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.right
+.ad
   flex 1
   padding-top 110px
   margin-left 20px

@@ -1,5 +1,5 @@
 <template lang="jade">
-.hello
+.download
   .inner
     .imgs
       img(src='https://ws1.sinaimg.cn/large/006tNc79ly1fjs5xjcai4j30yi1pcdxx.jpg')
@@ -15,11 +15,11 @@
 <script>
 
 export default {
-  name: 'hello'
+  name: 'download'
 }
 </script>
 <style lang="stylus" scoped>
-.hello
+.download
   padding 20px
   overflow scroll
   -webkit-overflow-scrolling touch

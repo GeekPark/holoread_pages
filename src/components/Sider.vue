@@ -24,7 +24,7 @@ export default {
       this.display = sources
     },
     qiniu (item) {
-      return `http://osxjx70im.bkt.clouddn.com/app/icon/${item}.png`
+      return `${config.qiniu}/app/icon/${item}.png`
     },
     changeType (t) {
       this.propsType(t)
