@@ -93,6 +93,7 @@ export default {
       margin-bottom 40px
       cursor pointer
     ul
+      background #f5f5f5
       flex 1
       list-style none
       margin 0 auto
