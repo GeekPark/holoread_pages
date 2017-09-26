@@ -63,4 +63,10 @@ export default {
   a
     cursor pointer
     color rgb(58, 58, 58)
+@media (max-width: 750px) {
+.header .items {
+    flex 3
+    margin-left 10px
+  }
+}
 </style>

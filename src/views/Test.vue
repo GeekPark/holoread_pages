@@ -160,8 +160,16 @@ export default {
     -webkit-overflow-scrolling touch
     height 100%
   }
+  .left, .right {
+    display none
+  }
   ul {
-    width calc(100% - 10px) !important
+    width calc(100% - 20px) !important
+    margin 0 auto
+    li {
+      margin-left 10px !important
+      width calc(100% - 20px) !important
+    }
   }
 }
 </style>
