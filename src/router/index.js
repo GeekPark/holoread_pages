@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DownLoad from '@/views/DownLoad'
-import Preview from '@/views/Preview'
-import Test from '@/views/Test'
-import Source from '@/views/Source'
+import DownLoad from '../views/DownLoad'
+import Preview from '../views/Preview'
+import Test from '../views/Test'
+import Source from '../views/Source'
 
 Vue.use(Router)
 
