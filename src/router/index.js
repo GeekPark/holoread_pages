@@ -30,6 +30,11 @@ export default new Router({
       path: '/test',
       name: 'Test',
       component: Test
+    },
+    {
+      path: '/sougou',
+      name: 'sougou',
+      component: Test
     }
   ]
 })

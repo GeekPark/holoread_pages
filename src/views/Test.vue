@@ -6,7 +6,7 @@ section.test
     ul
       li(v-for='item in list', :key='item._id', v-if='list.length')
         .li-left
-          a(:href='item.url', target='_blank').title {{item.origin_title}}
+          a(:href='item.url', target='_blank').title {{$route.query.translate ? item.edited_title : item.origin_title}}
           .abstract {{item.origin_content}}
           .bar
             img(:src='item.avatar')
@@ -44,6 +44,11 @@ export default {
     return {
       params: defaultParams,
       list: []
+    }
+  },
+  watch: {
+    '$route': function (val) {
+      console.log(val)
     }
   },
   methods: {

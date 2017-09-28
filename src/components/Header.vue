@@ -6,6 +6,9 @@ header.header
     router-link(to='/test').list
       span(@click='onClick') READING LIST
       span.bottom-line
+    a.list
+      span(@click='sogou') SOUGOU TRANSLATE
+      span.bottom-line
     router-link(to='/todo').list
       span TODO
       span.bottom-line
@@ -21,7 +24,11 @@ export default {
   props: ['refresh'],
   methods: {
     onClick () {
+      delete this.$route.query.translate
       this.refresh && this.refresh()
+    },
+    sogou () {
+      this.$router.push('/test?translate=true')
     }
   },
   mounted() {
