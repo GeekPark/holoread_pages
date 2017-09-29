@@ -7,7 +7,7 @@ section.keywords
         span.word {{item.word}}
         ul.articles(v-show='item.display')
           li(v-for='(url, index) in item.url')
-            a(:href='url', target='_blank') {{item.origin_title[index]}}
+            a(:href='url', target='_blank' v-html='createHtml(item.word, item.origin_title[index])')
     .warning(v-else)
       div wait a moment ....
       div training data ....
@@ -32,6 +32,9 @@ export default {
     }
   },
   methods: {
+    createHtml (word, dom) {
+      return dom.replace(word, `<span style='color: rgb(110, 192, 132)'>${word}</span>`)
+    },
     unwind (word) {
       word.display = !word.display
     },
@@ -42,6 +45,7 @@ export default {
           el.display = false
           return el
         })
+        result.data[0].display = true
         this.list = result.data
       }, error => {})
     }
@@ -67,9 +71,9 @@ export default {
     .left
       flex 1
     .right
-      flex 0
+      flex 1
     ul
-      flex 7
+      flex 6
       list-style none
       margin 0 auto
       padding 30px 0 0 0
@@ -97,12 +101,13 @@ export default {
         margin-top: 6px;
         width: 4px;
         height: 4px;
-        border: 1.5px solid #acb9c6;
+        border: 1.5px solid rgb(110, 192, 132);
         border-radius: 50%;
       a
         font-size 16px
         color rgb(150, 150, 150)
         font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
+        line-height 22px
 
 @media (max-width: 750px) {
   .test {

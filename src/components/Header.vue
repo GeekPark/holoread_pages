@@ -16,7 +16,7 @@ export default {
     return {
       isActive: '/test',
       items: [['/test', 'READING LIST'],
-              ['/test?translate=true', 'SOUGOU TRANSLATE'],
+              ['/test?translate=true', 'TRANSLATE'],
               ['/keywords', 'KEYWORDS'],
               ['/todo', 'TODO']]
     }
