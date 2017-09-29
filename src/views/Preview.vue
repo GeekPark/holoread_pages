@@ -91,7 +91,12 @@ export default {
     }
   },
   mounted() {
-
+    try {
+      const header = document.querySelectorAll('header')[0]
+      header.parentNode.removeChild(header)
+    } catch(e) {
+      console.log(e)
+    }
     const linkFunc = (event) => {
       if (event.target.href) {
         try {
@@ -114,9 +119,6 @@ export default {
         Array.from(document.querySelectorAll('a')).forEach(el => {
           el.onclick = linkFunc
         })
-        // Array.from(document.querySelectorAll('.content img')).forEach(el => {
-        //   el.onclick = touchImg
-        // })
         hiddenElements(this)
       })
     }, error => {})

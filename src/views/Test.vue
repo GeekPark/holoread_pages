@@ -1,6 +1,5 @@
 <template lang="jade">
 section.test
-  vheader(:refresh='refresh')
   .container
     .left
     ul
@@ -26,7 +25,6 @@ section.test
 import config from '../config.js'
 import tool from '../js/tool.js'
 import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
 import TopNews from '@/components/TopNews.vue'
 const defaultParams = {
   start: 0,
@@ -37,7 +35,6 @@ export default {
   name: 'test',
   components: {
     'vfooter': Footer,
-    'vheader': Header,
     'topnews': TopNews
   },
   data () {
@@ -122,6 +119,7 @@ export default {
       margin-top 3px
       display flex
     img
+      margin-left 10px
       width 30px
       height 30px
       // border-radius 15px
@@ -133,6 +131,9 @@ export default {
       margin-top 8px
       line-height 20px
       letter-spacing 0.4px
+    ::selection
+      background rgba(110, 192, 132, 0.7)
+      color #fff
     .info
       margin-top 6px
     .source

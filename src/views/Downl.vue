@@ -15,7 +15,15 @@
 <script>
 
 export default {
-  name: 'download'
+  name: 'download',
+  mounted () {
+    try {
+      const header = document.querySelectorAll('header')[0]
+      header.parentNode.removeChild(header)
+    } catch(e) {
+      console.log(e)
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>

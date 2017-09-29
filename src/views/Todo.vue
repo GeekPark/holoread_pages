@@ -1,6 +1,5 @@
 <template lang="jade">
 section.todo
-  vheader
   .container
     .left
     ul
@@ -10,7 +9,6 @@ section.todo
 
 <script>
 import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
 import TopNews from '@/components/TopNews.vue'
 export default {
   data () {
@@ -20,7 +18,6 @@ export default {
   },
   components: {
     'vfooter': Footer,
-    'vheader': Header,
     'topnews': TopNews
   },
   mounted() {

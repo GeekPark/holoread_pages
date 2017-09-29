@@ -4,6 +4,7 @@ import DownLoad from '../views/Downl'
 import Preview from '../views/Preview'
 import Test from '../views/Test'
 import Todo from '../views/Todo'
+import Keywords from '../views/Keywords'
 // import Source from '../views/Source'
 
 Vue.use(Router)
@@ -30,6 +31,11 @@ export default new Router({
       path: '/test',
       name: 'Test',
       component: Test
+    },
+    {
+      path: '/keywords',
+      name: 'Keywords',
+      component: Keywords
     },
     {
       path: '/sougou',

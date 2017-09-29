@@ -1,16 +1,11 @@
 <template lang="jade">
 header.header
-  router-link(to='/test').logo
-    span(@click='onClick') HoloNews
+  a(@click='onClick("/test")').logo
+    span Holo
+    span News
   .items
-    router-link(to='/test').list
-      span(@click='onClick') READING LIST
-      span.bottom-line
-    a.list
-      span(@click='sogou') SOUGOU TRANSLATE
-      span.bottom-line
-    router-link(to='/todo').list
-      span TODO
+    a.list(v-for='item in items', v-bind:class="{ active: isActive === item[0] }", v-on:click.stop='onClick(item[0])')
+      span(v-on:click.stop='onClick(item[0])') {{item[1]}}
       span.bottom-line
 </template>
 
@@ -19,16 +14,18 @@ export default {
   name: 'header',
   data () {
     return {
+      isActive: '/test',
+      items: [['/test', 'READING LIST'],
+              ['/test?translate=true', 'SOUGOU TRANSLATE'],
+              ['/keywords', 'KEYWORDS'],
+              ['/todo', 'TODO']]
     }
   },
-  props: ['refresh'],
   methods: {
-    onClick () {
-      delete this.$route.query.translate
-      this.refresh && this.refresh()
-    },
-    sogou () {
-      this.$router.push('/test?translate=true')
+    onClick (url) {
+      console.log(url)
+      this.isActive = url
+      this.$router.push(url)
     }
   },
   mounted() {
@@ -36,6 +33,18 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+@font-face {
+  font-family "Caslon"
+  src url("../assets/Adobe Caslon Pro Regular.ttf") format("truetype")
+  font-style normal
+  font-weight normal
+}
+
+.s
+  color rgb(110, 192, 132)
+.active
+  .bottom-line
+    background-color #3F3F3F
 .header
   display flex
   border-bottom 1px solid rgb(240, 240, 240)
@@ -46,7 +55,7 @@ export default {
     padding-left 20px
     font-size 25px
     flex 1
-    font-weight 800
+    font-family 'Caslon'
   .items
     flex 7
     margin-left -20px
@@ -57,17 +66,17 @@ export default {
       margin-right 20px
       position relative
       .bottom-line
-        display none
         width 100%
-        height 1px
-        background-color #3F3F3F
+        height 1.5px
+        background-color #fff
         position absolute
         bottom -18px
         left 0
-    a:hover
+        transition background-color 0.5s
+    a:hover, .active
       .bottom-line
-        display block
-  a
+        background-color #3F3F3F
+  a, .items
     cursor pointer
     color rgb(58, 58, 58)
 @media (max-width: 750px) {
