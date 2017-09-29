@@ -29,6 +29,7 @@ export default {
     }
   },
   mounted() {
+    this.isActive = this.$route.fullPath
   }
 }
 </script>
