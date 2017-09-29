@@ -65,7 +65,7 @@ export default {
       this.fetch(false)
     },
     fetch (isConcat = true) {
-      axios.get(`${config.host}/api/v1/fetures/test`, {params: this.params})
+      axios.get(`${config.host}/api/v1/fetures/holonews`, {params: this.params})
       .then(result => {
         localStorage.setItem('catch', result.data.data)
         result.data.data.map(el => {
