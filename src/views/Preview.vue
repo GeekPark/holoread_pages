@@ -1,7 +1,7 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark', fontSize1: $route.query.fontSize === '1', fontSize2: $route.query.fontSize === '2', fontSize3: $route.query.fontSize === '3' }")
 
-  img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
+  //- img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
   .img-preview
     img(:src='imgUrl', v-if='imgUrl', alt='img', @click='cancelTouch')
 
@@ -114,9 +114,9 @@ export default {
         Array.from(document.querySelectorAll('a')).forEach(el => {
           el.onclick = linkFunc
         })
-        Array.from(document.querySelectorAll('.content img')).forEach(el => {
-          el.onclick = touchImg
-        })
+        // Array.from(document.querySelectorAll('.content img')).forEach(el => {
+        //   el.onclick = touchImg
+        // })
         hiddenElements(this)
       })
     }, error => {})
