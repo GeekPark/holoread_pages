@@ -194,12 +194,15 @@ export default {
 
 @media (max-width: 750px) {
   .test {
-    overflow scroll
-    -webkit-overflow-scrolling touch
     height 100%
   }
   .left, .right {
     display none
+  }
+  .container {
+    height 100%
+    overflow scroll
+    -webkit-overflow-scrolling touch
   }
   ul {
     width calc(100% - 20px) !important
@@ -208,6 +211,13 @@ export default {
       margin-left 10px !important
       width calc(100% - 20px) !important
     }
+  }
+  .next {
+    padding-bottom: 80px !important
+  }
+  a, li, ul {
+    -webkit-tap-highlight-color transparent
+    -webkit-touch-callout none
   }
 }
 </style>

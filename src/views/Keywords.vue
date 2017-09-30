@@ -6,7 +6,7 @@ section.keywords
       .reminder
         .cn(v-if='isTranslate') 我们对最新的300篇新闻进行分析, 关键词结果如下:
         .en(v-else) We analyze the latest 300 news, keyword results are as follows:
-      li(v-for='item in list', :key='item.word', v-if='list.length', @click='unwind(item)')
+      li.word-li(v-for='item in list', :key='item.word', v-if='list.length', @click='unwind(item)')
         span.word {{item.word}}
         img.upwown(src='../assets/down.svg', v-if='!item.display')
         img.upwown(src='../assets/up.svg', v-else)
@@ -98,16 +98,17 @@ export default {
       padding 30px 0 0 0
       // border-right 1px solid rgb(240, 240, 240)
     li
-      padding 20px 0 10px 0
+      padding 15px 0
       border-bottom 1px solid rgb(240, 240, 240)
       width 80%
       cursor pointer
       position relative
     .upwown
       position absolute
-      right 5px
+      right 15px
       width 15px
       user-select none
+      top 20px
     .word
       user-select none
       font-size 20px
@@ -139,12 +140,18 @@ export default {
 
 @media (max-width: 750px) {
   .keywords {
+    height 100%
+  }
+  .container {
+    height 100%
     overflow scroll
     -webkit-overflow-scrolling touch
-    height 100%
   }
   .left, .right {
     display none
+  }
+  .reminder, .warning {
+    padding 0 10px
   }
   ul {
     width calc(100% - 20px) !important
@@ -153,6 +160,13 @@ export default {
       margin-left 10px !important
       width calc(100% - 20px) !important
     }
+  }
+  .word-li:last-child {
+    padding-bottom 80px !important
+  }
+  a, li, ul {
+    -webkit-tap-highlight-color transparent
+    -webkit-touch-callout none
   }
 }
 </style>

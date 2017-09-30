@@ -110,8 +110,10 @@ export default {
 .actions img {
   width 20px !important
 }
+a {
+  -webkit-tap-highlight-color transparent
+  -webkit-touch-callout none
 }
-
-
+}
 
 </style>
