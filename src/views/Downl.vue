@@ -8,7 +8,7 @@
     .buttons
       a.button(href='https://itunes.apple.com/app/id1254313928') iOS
       a.button(href='http://osxjx70im.bkt.clouddn.com/holoread-app-release.apk?attname=') Andriod
-      a.button.test(href='/test') Test
+      a.button.test(href='/test') HoloNews
     .bottom-bar
 </template>
 
@@ -61,8 +61,8 @@ export default {
   text-align center
   cursor pointer
 .test
-  color #D03840
-  border-color #D03840
+  color rgb(110, 192, 132)
+  border-color rgb(110, 192, 132)
 @media (max-width: 745px) {
   .imgs img {
     width 100%

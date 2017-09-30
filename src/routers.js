@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DownLoad from '../views/Downl'
-import Preview from '../views/Preview'
-import Test from '../views/Test'
-import Todo from '../views/Todo'
-import Keywords from '../views/Keywords'
+import DownLoad from './views/Downl'
+import Preview from './views/Preview'
+import HoloNews from './views/HoloNews'
+import Todo from './views/Todo'
+import Keywords from './views/Keywords'
+import RSS from './views/RSS'
 // import Source from '../views/Source'
 
 Vue.use(Router)
@@ -29,8 +30,8 @@ export default new Router({
     },
     {
       path: '/test',
-      name: 'Test',
-      component: Test
+      name: 'HoloNews',
+      component: HoloNews
     },
     {
       path: '/keywords',
@@ -38,9 +39,9 @@ export default new Router({
       component: Keywords
     },
     {
-      path: '/sougou',
-      name: 'sougou',
-      component: Test
+      path: '/rss',
+      name: 'RSS',
+      component: RSS
     }
   ]
 })

@@ -7,25 +7,35 @@ header.header
     a.list(v-for='item in items', v-bind:class="{ active: isActive === item[0] }", v-on:click.stop='onClick(item[0])')
       span(v-on:click.stop='onClick(item[0])') {{item[1]}}
       span.bottom-line
+  .actions
+    img(src='../assets/translate_enable.svg', v-if='isTranslate', @click='changeLanguage')
+    img(src='../assets/translate_disable.svg', v-else, @click='changeLanguage')
+
 </template>
 
 <script>
 export default {
   name: 'header',
+  computed: {
+    isTranslate () {
+      return this.$store.state.isTranslate
+    }
+  },
   data () {
     return {
       isActive: '/test',
       items: [['/test', 'READING LIST'],
-              ['/test?translate=true', 'TRANSLATE'],
-              ['/keywords', 'KEYWORDS'],
-              ['/todo', 'TODO']]
+              ['/keywords', 'TRENDING'],
+              ['rss', 'RSS']]
     }
   },
   methods: {
     onClick (url) {
-      console.log(url)
       this.isActive = url
       this.$router.push(url)
+    },
+    changeLanguage () {
+      this.$store.commit('SET_ITEM', {key: 'isTranslate', val: !this.isTranslate})
     }
   },
   mounted() {
@@ -59,7 +69,7 @@ export default {
     font-family 'Caslon'
   .items
     flex 7
-    margin-left -20px
+    margin-left -10px
     display flex
     align-items center
     font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
@@ -77,13 +87,31 @@ export default {
     a:hover, .active
       .bottom-line
         background-color #3F3F3F
+  .actions
+    display flex
+    padding-right 20px
+    img
+      width 30px
+      cursor pointer
+      margin 0 5px
+      transition all 0.5s
   a, .items
     cursor pointer
     color rgb(58, 58, 58)
 @media (max-width: 750px) {
+
 .header .items {
-    flex 3
-    margin-left 10px
-  }
+  flex 3
+  margin-left 10px
 }
+.list:nth-child(3) {
+  display none
+}
+.actions img {
+  width 20px !important
+}
+}
+
+
+
 </style>

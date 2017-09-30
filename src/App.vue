@@ -40,10 +40,8 @@ html
 a
   text-decoration none
   cursor pointer
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .1s
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-  opacity: 0
-}
+.fade-enter-active, .fade-leave-active
+  transition all .2s ease
+.fade-enter, .fade-leave-active
+  opacity 0
 </style>

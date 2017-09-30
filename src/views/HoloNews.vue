@@ -1,11 +1,13 @@
 <template lang="jade">
-section.test
+section.test#test
   .container
     .left
     ul
+      .preview-img(@click='cancelPreview', v-show='previewSrc')
+        img(:src='previewSrc')
       li(v-for='item in list', :key='item._id', v-if='list.length')
         .li-left
-          a(:href='item.url', target='_blank').title {{$route.query.translate ? item.edited_title : item.origin_title}}
+          a(:href='item.url', target='_blank').title {{isTranslate ? item.edited_title : item.origin_title}}
           .abstract {{item.origin_content}}
           .bar
             img(:src='item.avatar')
@@ -40,15 +42,19 @@ export default {
   data () {
     return {
       params: defaultParams,
-      list: []
+      list: [],
+      previewSrc: '',
     }
   },
-  watch: {
-    '$route': function (val) {
-      console.log(val)
+  computed: {
+    'isTranslate' () {
+      return this.$store.state.isTranslate
     }
   },
   methods: {
+    cancelPreview () {
+      this.previewSrc = ''
+    },
     next () {
       this.params.start += 1
       this.fetch()
@@ -75,6 +81,14 @@ export default {
           return el
         })
         this.list = isConcat ? this.list.concat(result.data.data) : result.data.data
+        setTimeout(() => { // 异步
+          const _this = this
+          document.querySelectorAll('.li-right img').forEach( el => {
+            el.onclick = function (event) {
+              _this.previewSrc = _this.previewSrc === '' ? event.target.src : ''
+            }
+          })
+        })
       }, error => {})
     }
   },
@@ -97,6 +111,17 @@ export default {
     .right
       flex 2
       background rgb(250, 250, 250)
+    .preview-img
+      position fixed
+      z-index 10
+      cursor pointer
+      width 50%
+      transition display 1s
+      img
+        width 100%
+        height auto
+        border-radius 5px
+        transition display 1s
     ul
       flex 5
       list-style none
@@ -109,20 +134,22 @@ export default {
       width 80%
       display flex
     .li-left
-      flex 8
+      flex 12
     .li-right
-      flex 1
+      flex 2
       img
-        width 100%
+        width calc(100% - 10px)
         height auto
+        margin-left 10px
+        cursor pointer
+        border-radius 2px
     .bar
       margin-top 3px
       display flex
     img
-      margin-left 10px
       width 30px
       height 30px
-      // border-radius 15px
+      border-radius 15px
       margin 10px 10px 10px 0
     .abstract
       font-family medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif
@@ -131,6 +158,11 @@ export default {
       margin-top 8px
       line-height 20px
       letter-spacing 0.4px
+      overflow hidden
+      text-overflow ellipsis
+      display -webkit-box
+      -webkit-line-clamp 2
+      -webkit-box-orient vertical
     ::selection
       background rgba(110, 192, 132, 0.7)
       color #fff

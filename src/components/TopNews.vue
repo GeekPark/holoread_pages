@@ -5,7 +5,7 @@ section.top-views
     li(v-for='(item, index) in display')
       .index {{index + 1}}
       a(:href='item.url', target='_blank')
-        .title  {{item.origin_title}}
+        .title  {{isTranslate ? item.edited_title : item.origin_title}}
     .others
       //- span © 2017 GeekPark
       a(href='mailto:github@ericjj.com') Contact
@@ -22,6 +22,9 @@ export default {
         return this.list.slice(0, 5)
       }
       return this.list
+    },
+    isTranslate () {
+      return this.$store.state.isTranslate
     }
   },
   mounted() {
