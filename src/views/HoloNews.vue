@@ -60,17 +60,13 @@ export default {
       this.fetch()
     },
     otherSource (s) {
+      console.log(s)
       this.params.source = s
-      this.fetch(false)
-    },
-    refresh () {
-      delete this.params.source
       this.fetch(false)
     },
     fetch (isConcat = true) {
       axios.get(`${config.host}/api/v1/fetures/holonews`, {params: this.params})
       .then(result => {
-        localStorage.setItem('catch', result.data.data)
         result.data.data.map(el => {
           el.published = tool.timeSinceTest(new Date(el.published))
           el.avatar = `${config.qiniu}/app/icon/${el.source}.png`
@@ -81,6 +77,7 @@ export default {
           return el
         })
         this.list = isConcat ? this.list.concat(result.data.data) : result.data.data
+        console.log(this.list[0].url)
         setTimeout(() => { // 异步
           const _this = this
           document.querySelectorAll('.li-right img').forEach( el => {
@@ -93,6 +90,7 @@ export default {
     }
   },
   mounted() {
+    delete this.params.source
     this.fetch()
   }
 }
