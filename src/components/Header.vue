@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     onClick (url) {
+      this.$store.commit('SET_ITEM',{key:'source', val: ''})
       this.isActive = url
       this.$router.push(url)
     },

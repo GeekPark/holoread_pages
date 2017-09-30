@@ -51,6 +51,11 @@ export default {
       return this.$store.state.isTranslate
     }
   },
+  watch: {
+    '$store.state.source': function (val) {
+      this.fetch(false)
+    }
+  },
   methods: {
     cancelPreview () {
       this.previewSrc = ''
@@ -60,12 +65,13 @@ export default {
       this.fetch()
     },
     otherSource (s) {
-      console.log(s)
-      this.params.source = s
-      this.fetch(false)
+      this.$store.commit('SET_ITEM',{key:'source', val: s})
     },
     fetch (isConcat = true) {
-      axios.get(`${config.host}/api/v1/fetures/holonews`, {params: this.params})
+      const params = {
+        'source': this.$store.state.source
+      }
+      axios.get(`${config.host}/api/v1/fetures/holonews`, {params: params})
       .then(result => {
         result.data.data.map(el => {
           el.published = tool.timeSinceTest(new Date(el.published))
@@ -77,7 +83,6 @@ export default {
           return el
         })
         this.list = isConcat ? this.list.concat(result.data.data) : result.data.data
-        console.log(this.list[0].url)
         setTimeout(() => { // 异步
           const _this = this
           document.querySelectorAll('.li-right img').forEach( el => {

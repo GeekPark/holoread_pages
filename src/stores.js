@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isTranslate: false
+    isTranslate: false,
+    source: ''
   },
   mutations: {
     SET_ITEM: (state, obj) => {
