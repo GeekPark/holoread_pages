@@ -14,7 +14,7 @@
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
 
   p.info
-    span(@click='handleSource') {{article.ago}}前 | {{article.source}}
+    span(@click='handleSource') {{article.ago}} | {{article.source}}
     span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
       img.icon(:src='originIcon')
       | {{isOrigin ? "翻译" : "原文"}}

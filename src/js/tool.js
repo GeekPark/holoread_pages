@@ -21,7 +21,11 @@ function timeSince(date) {
   if (interval > 1) {
     return interval + "m" //minutes
   }
-  return Math.floor(seconds) + "s" //seconds
+  interval = Math.floor(seconds)
+  if (interval > 1) {
+     return interval + "s"  //seconds
+  }
+  return 'now'
 }
 
 function timeSinceTest(date) {
