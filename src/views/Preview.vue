@@ -14,18 +14,19 @@
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
 
   p.info
-    span(@click='handleSource') {{article.ago}} | {{article.source}}
-    span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
-      img.icon(:src='originIcon')
-      | {{isOrigin ? "翻译" : "原文"}}
-    span.line(v-if='!article.is_cn')
-    span.r.no-touch-bg(@click='handleShare', v-if='!isWechat')
-      img.icon(:src='combineQiniu("share.png")')
-      | 分享
-    span.line(v-if='!isWechat')
-    span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.like}")
-      img.icon(:src='likeIcon')
-      | {{article.like ? "取消收藏" : "收藏" }}
+    span.source(@click='handleSource') {{article.ago}} | {{article.source}}
+    span.actions
+      span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
+        img.icon(:src='originIcon')
+        | {{isOrigin ? "翻译" : "原文"}}
+      span.line(v-if='!article.is_cn')
+      span.r.no-touch-bg(@click='handleShare', v-if='!isWechat')
+        img.icon(:src='combineQiniu("share.png")')
+        | 分享
+      span.line(v-if='!isWechat')
+      span.r.no-touch-bg(@click='handleLike', v-bind:class="{like: article.like}")
+        img.icon(:src='likeIcon')
+        | {{article.like ? "取消收藏" : "收藏" }}
 
   p
     .content(v-html='content')
@@ -297,6 +298,9 @@ function hiddenElements(_this) {
   .line
     margin 9px !important
     height 14px !important
-
-
+@media (max-width: 640px) {
+   .fontSize2 .info *, .fontSize3 .info * {
+     font-size 15px !important
+   }
+}
 </style>
