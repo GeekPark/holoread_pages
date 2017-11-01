@@ -1,14 +1,9 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark', fontSize1: $route.query.fontSize === '1', fontSize2: $route.query.fontSize === '2', fontSize3: $route.query.fontSize === '3' }")
-
-  //- img.tpl(:src='combineQiniu("article_tpl.svg")', v-if='!article.trans_content')
-  .img-preview
-    img(:src='imgUrl', v-if='imgUrl', alt='img', @click='cancelTouch')
-
+  //- img.logo(src='https://ws2.sinaimg.cn/large/006tNc79ly1fl2qcrextxj308d08dmyo.jpg')
   .translate_warning(v-if='isOrigin', @click='isOrigin = false')
     span.try 点击试试机器翻译！
     span.msg 水平有限，小心食用~
-
   h1.title {{article.edited_title}} &nbsp
     img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
@@ -121,6 +116,7 @@ export default {
           el.onclick = linkFunc
         })
         hiddenElements(this)
+        document.title = `HOLOREAD - ${this.article.edited_title}`
       })
     }, error => {})
     this.isWechat = isWeixinBrowser()
@@ -161,6 +157,11 @@ function hiddenElements(_this) {
   overflow-x hidden
   height 100%
   -webkit-overflow-scrolling touch
+
+  .logo
+    position relative
+    z-index -1
+    height 0
 
   .tpl
     width 100%
@@ -206,6 +207,11 @@ function hiddenElements(_this) {
     color rgba(153,153,153,1)
     font-family 'PingFangSC-Light'
     font-size 10px
+    position -webkit-sticky
+    position sticky
+    top -12px
+    background-color #fff
+
   .content
     font-family 'PingFangSC-Regular'
     font-size 13px
@@ -265,6 +271,8 @@ function hiddenElements(_this) {
     color #6E82A0
   .info *
     color #606476
+  .info
+    background-color #1e1e29 !important
   .line
     background-color rgba(96, 100, 188, 1) !important
   .translate_warning
