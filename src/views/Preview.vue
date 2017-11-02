@@ -1,15 +1,17 @@
 <template lang="jade">
 #preview(v-bind:class="{ darkTheme: $route.query.theme === 'dark', fontSize1: $route.query.fontSize === '1', fontSize2: $route.query.fontSize === '2', fontSize3: $route.query.fontSize === '3' }")
   //- img.logo(src='https://ws2.sinaimg.cn/large/006tNc79ly1fl2qcrextxj308d08dmyo.jpg')
-  .translate_warning(v-if='isOrigin', @click='isOrigin = false')
+  .translate_warning(v-if='isOrigin && article.is_cn === false', @click='isOrigin = false')
     span.try 点击试试机器翻译！
     span.msg 水平有限，小心食用~
-  h1.title {{article.edited_title}} &nbsp
+  h1.title {{isOrigin ? article.origin_title : article.edited_title}} &nbsp
     img.status-icon(:src='combineQiniu("hot.png")', v-if='article.hot')
     img.status-icon(:src='combineQiniu("recommend.png")', v-if='article.order > 0')
 
   p.info
-    span.source(@click='handleSource') {{article.ago}} | {{article.source}}
+    span.ago {{article.ago}}
+    span |
+    span.source(@click='handleSource') {{article.source}}
     span.actions
       span.r.no-touch-bg(@click="isOrigin = !isOrigin", v-if='!article.is_cn')
         img.icon(:src='originIcon')
@@ -230,7 +232,7 @@ function hiddenElements(_this) {
 
   .like
     color rgba(255,137,50,1)
-  a
+  a, .source
     margin 0 2px
     color rgba(44,181,115,1)
   .r
@@ -254,6 +256,10 @@ function hiddenElements(_this) {
     width 15px
     height 16px
     margin-right 5px
+  .ago
+    margin-right 5px
+  .source
+    margin-left 5px
 
   h3
     word-wrap: break-word;
