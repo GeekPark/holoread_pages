@@ -102,12 +102,12 @@ export default {
     setupWebViewJavascriptBridge(function(bridge) {
        //注册处理
         bridge.registerHandler('JS Echo', function(data, responseCallback) {
-            console.log("JS Echo called with:", data)
+            alert("JS Echo called with:")
             responseCallback(data)
         })
         //调用处理
         bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
-            console.log("JS received response:", responseData)
+            alert("JS received response:")
         })
     })
     try {
