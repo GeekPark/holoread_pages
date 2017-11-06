@@ -89,6 +89,27 @@ export default {
     }
   },
   mounted() {
+    function setupWebViewJavascriptBridge(callback) {
+      if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge) }
+      if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
+      window.WVJBCallbacks = [callback]
+      var WVJBIframe = document.createElement('iframe')
+      WVJBIframe.style.display = 'none'
+      WVJBIframe.src = 'https://__bridge_loaded__'
+      document.documentElement.appendChild(WVJBIframe)
+      setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+    }
+    setupWebViewJavascriptBridge(function(bridge) {
+       //注册处理
+        bridge.registerHandler('JS Echo', function(data, responseCallback) {
+            console.log("JS Echo called with:", data)
+            responseCallback(data)
+        })
+        //调用处理
+        bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
+            console.log("JS received response:", responseData)
+        })
+    })
     try {
       const header = document.querySelectorAll('header')[0]
       header.parentNode.removeChild(header)
