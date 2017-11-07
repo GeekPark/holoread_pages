@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://ws3.sinaimg.cn/large/006tNc79ly1fk20mznfq4j305k05kaao.jpg" type="image/jpg">
+    <title>HOLONEWS</title>
+    <style type="text/css">
+      #preview {
+        padding: 12px;
+        width: calc(100% - 24px);
+        color: #333;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #preview .logo {
+        position: relative;
+        z-index: -1;
+        height: 0;
+      }
+
+      #preview .tpl {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        background-color: #fff;
+      }
+
+      #preview .img-preview {
+        height: 100%;
+        position: fixed;
+        z-index: 3;
+      }
+
+      #preview .img-preview img {
+        width: 100%;
+        height: 100%;
+      }
+
+      #preview .translate_warning {
+        width: calc(100% + 24px);
+        height: 26px;
+        line-height: 26px;
+        margin-left: -12px;
+        margin-top: -12px;
+        text-align: center;
+        background-color: #a1ddbf;
+        font-family: 'PingFangSC-Regular';
+        font-size: 13px;
+        color: #fff;
+      }
+
+      #preview .translate_warning .try {
+        margin-left: -12px;
+        color: #2cb573;
+      }
+
+      #preview .title {
+        font-family: 'PingFangSC-Medium';
+        font-size: 21px;
+        line-height: 31px;
+        float: none;
+        text-align: left;
+      }
+
+      #preview .info {
+        color: #999;
+        font-family: 'PingFangSC-Light';
+        font-size: 10px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: -12px;
+        background-color: #fff;
+      }
+
+      #preview .content {
+        font-family: 'PingFangSC-Regular';
+        font-size: 13px;
+        line-height: 20px;
+        width: 100%;
+      }
+
+      #preview .content img,
+      #preview .content figure,
+      #preview .content iframe {
+        width: 80% !important;
+        height: auto;
+      }
+
+      #preview .sougou {
+        width: 50%;
+        margin-left: 25%;
+        margin-top: 50px;
+        margin-bottom: 45px;
+      }
+
+      #preview .like {
+        color: #ff8932;
+      }
+
+      #preview a,
+      #preview .source {
+        margin: 0 2px;
+        color: #2cb573;
+      }
+
+      #preview .r {
+        float: right;
+        font-size: 13px;
+        font-family: 'PingFangSC-Regular';
+      }
+
+      #preview .icon {
+        width: 15px;
+        height: 13px;
+        margin-right: 4px;
+        top: 1px;
+        position: relative;
+      }
+
+      #preview .line {
+        width: 1px;
+        height: 10px;
+        margin: 4px 10px;
+        float: right;
+        background-color: #999;
+      }
+
+      #preview .status-icon {
+        width: 15px;
+        height: 16px;
+        margin-right: 5px;
+      }
+
+      #preview .ago {
+        margin-right: 5px;
+      }
+
+      #preview .source {
+        margin-left: 5px;
+      }
+
+      #preview h3 {
+        word-wrap: break-word;
+        word-break: normal;
+        font-size: 30px;
+      }
+
+      .darkTheme {
+        background-color: #1e1e29;
+      }
+
+      .darkTheme .title {
+        color: #8c96b4;
+      }
+
+      .darkTheme .content {
+        color: #6e82a0;
+      }
+
+      .darkTheme .info * {
+        color: #606476;
+      }
+
+      .darkTheme .info {
+        background-color: #1e1e29 !important;
+      }
+
+      .darkTheme .line {
+        background-color: #6064bc !important;
+      }
+
+      .darkTheme .translate_warning {
+        background-color: #21503e !important;
+      }
+
+      .fontSize1 .title {
+        font-size: 22px !important;
+      }
+
+      .fontSize1 .content *,
+      .fontSize1 .info * {
+        font-size: 15px !important;
+        line-height: 27px;
+      }
+
+      .fontSize1 .line {
+        margin: 8px !important;
+      }
+
+      .fontSize2 .title {
+        font-size: 23px !important;
+      }
+
+      .fontSize2 .content *,
+      .fontSize2 .info * {
+        font-size: 17px !important;
+        line-height: 29px;
+      }
+
+      .fontSize2 .line {
+        margin: 8px !important;
+        height: 12px !important;
+      }
+
+      .fontSize3 .title {
+        font-size: 24px !important;
+      }
+
+      .fontSize3 .content *,
+      .fontSize3 .info * {
+        font-size: 19px !important;
+        line-height: 31px;
+      }
+
+      .fontSize3 .line {
+        margin: 9px !important;
+        height: 14px !important;
+      }
+
+      @media (max-width: 640px) {
+        .fontSize2 .info *,
+        .fontSize3 .info * {
+          font-size: 15px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="preview" v-bind:class="{ darkTheme: theme === 'dark', fontSize1: fontSize === '1', fontSize2: fontSize === '2', fontSize3: fontSize === '3' }">
+
+        <div v-if="isOrigin && article.is_cn === false" v-bind:click="isOrigin = false" class="translate_warning">
+          <span class="try">点击试试机器翻译！</span>
+          <span class="msg">水平有限，小心食用~</span>
+        </div>
+
+        <h1 class="title">{{isOrigin ? article.origin_title : article.edited_title}}
+          <img :src="combineQiniu(&quot;hot.png&quot;)" v-if="article.hot" class="status-icon"/>
+          <img :src="combineQiniu(&quot;recommend.png&quot;)" v-if="article.order &gt; 0" class="status-icon"/>
+        </h1>
+        <p class="info">
+          <span class="ago">{{article.ago}}</span>
+          <span>|</span>
+          <span @click="handleSource" class="source">{{article.source}}</span>
+          <span class="actions">
+            <span @click="isOrigin = !isOrigin" v-if="!article.is_cn" class="r no-touch-bg">
+            <img :src="originIcon" class="icon"/>{{isOrigin ? "翻译" : "原文"}}</span>
+            <span v-if="!article.is_cn" class="line"></span>
+            <span @click="handleShare" v-if="!isWechat" class="r no-touch-bg">
+              <img :src="combineQiniu(&quot;share.png&quot;)" class="icon"/>分享</span>
+              <span v-if="!isWechat" class="line"></span>
+              <span @click="handleLike" v-bind:class="{like: article.like}" class="r no-touch-bg">
+                <img :src="likeIcon" class="icon"/>
+              {{article.like ? "取消收藏" : "收藏" }}</span>
+            </span>
+          </p>
+        <p>
+          <div v-html="content" class="content"></div><img :src="sougouIcon" class="sougou"/>
+        </p>
+      </div>
+    </div>
+    <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.2.6/vue.min.js"></script>
+    <script type="text/javascript">
+      var config = {
+         host: 'https://apigo.holoread.news',
+         qiniu: 'http://osxjx70im.bkt.clouddn.com'
+      }
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue!',
+          article: {
+            like: false,
+            is_cn: false
+          },
+          isWechat: false,
+          isOrigin: false,
+          theme: 'light',
+          fontSize: '1',
+          user: '',
+          id: '',
+        },
+        computed: {
+          content () {
+            return this.isOrigin ? this.article.origin_content : this.article.edited_content
+          },
+          likeIcon () {
+            return this.article.like ? this.combineQiniu('liked.svg') : this.combineQiniu('like.png')
+          },
+          originIcon () {
+            return this.isOrigin ? this.combineQiniu('translate.svg') : this.combineQiniu('origin.svg')
+          },
+          sougouIcon () {
+            return this.combineQiniu(`${this.theme}-sougou.png`)
+          }
+        },
+        methods: {
+          combineQiniu (path) {
+            return `http://osxjx70im.bkt.clouddn.com/${path}`
+          },
+          handleShare () {
+            try {
+              JSObject.share(this.article._id)
+            } catch (e) {}
+          },
+          handleLike () {
+            if (this.user === '') {
+              return
+            }
+            this.article.like = !this.article.like
+            try {
+              JSObject.like(this.article._id, this.article.like)
+            } catch (e) {}
+          },
+          handleSource () {
+            try {
+              JSObject.link(this.article.url)
+            } catch (e) {}
+          },
+          cancelTouch () {
+            this.imgUrl = ''
+          }
+        },
+        mounted() {
+          // function setupWebViewJavascriptBridge(callback) {
+          //   if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge) }
+          //   if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
+          //   window.WVJBCallbacks = [callback]
+          //   var WVJBIframe = document.createElement('iframe')
+          //   WVJBIframe.style.display = 'none'
+          //   WVJBIframe.src = 'https://__bridge_loaded__'
+          //   document.documentElement.appendChild(WVJBIframe)
+          //   setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+          // }
+          // setupWebViewJavascriptBridge(function(bridge) {
+          //    //注册处理
+          //     bridge.registerHandler('JS Echo', function(data, responseCallback) {
+          //         alert("JS Echo called with:")
+          //         responseCallback(data)
+          //     })
+          //     //调用处理
+          //     bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
+          //         alert("JS received response:")
+          //     })
+          // })
+          var query = parseUrl()
+          Object.keys(query).forEach(k => {
+            this[k] = query[k]
+          })
+          axios.get(config.host + '/api/v1/articles/' + this.id, {params: {userid: this.user}})
+          .then(result => {
+            // console.log(result.data)
+            this.article = result.data
+            try { JSObject.cancelLoading() } catch (e) {}
+            try { JSObject.fetch(this.article.edited_title) } catch (e) {}
+            setTimeout(() => {
+              Array.from(document.querySelectorAll('a')).forEach(el => {
+                el.onclick = linkFunc
+              })
+              document.title = `HOLOREAD - ${this.article.edited_title}`
+            })
+          }, error => {})
+          this.isWechat = isWeixinBrowser()
+        },
+        watch: {
+          'article' (value) {
+            value.ago = timeSince(new Date(value.published))
+          },
+          'isOrigin' (value) {
+            try { JSObject.languageChange() } catch (e) {}
+          }
+        }
+      })
+      function isWeixinBrowser() {
+        return /micromessenger/.test(navigator.userAgent.toLowerCase())
+      }
+      function linkFunc(event) {
+        if (event.target.href) {
+          try {
+            JSObject.link(event.target.href)
+          } catch (e) {}
+        }
+      }
+      function parseUrl() {
+        var nvpair = {};
+        var qs = window.location.search.replace('?', '');
+        var pairs = qs.split('&');
+        pairs.forEach(function(v) {
+          var pair = v.split('=');
+          nvpair[pair[0]] = pair[1];
+        })
+        return nvpair;
+      }
+      function timeSince(date) {
+        let seconds = Math.floor((new Date() - date) / 1000)
+        let interval = Math.floor(seconds / 31536000)
+        if (interval > 1) {
+          return interval + "y" //years
+        }
+        interval = Math.floor(seconds / 2592000)
+        if (interval > 1) {
+          return interval + "M" // months
+        }
+        interval = Math.floor(seconds / 86400)
+        if (interval > 1) {
+          return interval + "d" // days
+        }
+        interval = Math.floor(seconds / 3600)
+        if (interval > 1) {
+          return interval + "h" // hours
+        }
+        interval = Math.floor(seconds / 60)
+        if (interval > 1) {
+          return interval + "m" //minutes
+        }
+        interval = Math.floor(seconds)
+        if (interval > 1) {
+           return interval + "s"  //seconds
+        }
+        return 'now'
+      }
+    </script>
+  </body>
+</html>
